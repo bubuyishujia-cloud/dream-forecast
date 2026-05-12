@@ -8,13 +8,13 @@ const ratingEmoji = {
   '奇': '🌟'
 };
 
-export default function HistoryPanel({ onSelectRecord }) {
+export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
   const [history, setHistory] = useState([]);
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     loadHistory();
-  }, []);
+  }, [refreshTrigger]); // 当 refreshTrigger 变化时重新加载
 
   const loadHistory = () => {
     setHistory(getDreamHistory());

@@ -15,26 +15,73 @@ export default function DreamResult({ dreamText, emotions, result, timestamp }) 
 
   const handleShare = () => {
     const shareUrl = generateShareUrl({ dreamText, emotions, result, timestamp });
-    navigator.clipboard.writeText(shareUrl);
-    alert('分享链接已复制到剪贴板！');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareUrl)
+        .then(() => alert('分享链接已复制到剪贴板！'))
+        .catch(() => alert('复制失败，请手动复制：\n' + shareUrl));
+    } else {
+      alert('分享链接：\n' + shareUrl);
+    }
   };
 
   const handleScreenshot = async () => {
     if (!cardRef.current) return;
 
     try {
+      // 显示加载提示
+      const loadingMsg = alert('正在生成图片，请稍候...');
+
       const canvas = await html2canvas(cardRef.current, {
         backgroundColor: '#1a1f3a',
-        scale: 2
+        scale: window.devicePixelRatio || 2,
+        useCORS: true,
+        allowTaint: true,
+        logging: false
       });
 
-      const link = document.createElement('a');
-      link.download = `dream-forecast-${Date.now()}.png`;
-      link.href = canvas.toDataURL();
-      link.click();
+      // 转换为 Blob
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          alert('图片生成失败，请重试');
+          return;
+        }
+
+        // 移动端使用分享 API
+        if (navigator.share && navigator.canShare) {
+          const file = new File([blob], `dream-forecast-${Date.now()}.png`, { type: 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            navigator.share({
+              files: [file],
+              title: '梦境预报',
+              text: '我的梦境解析结果'
+            }).catch(() => {
+              // 分享失败，降级到下载
+              downloadImage(blob);
+            });
+            return;
+          }
+        }
+
+        // 桌面端或不支持分享 API 的设备，直接下载
+        downloadImage(blob);
+      }, 'image/png');
+
     } catch (error) {
-      alert('截图失败，请重试');
+      console.error('截图错误:', error);
+      alert('截图失败，请重试或使用手机截屏功能');
     }
+  };
+
+  const downloadImage = (blob) => {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = `dream-forecast-${Date.now()}.png`;
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    alert('图片已保存！');
   };
 
   return (

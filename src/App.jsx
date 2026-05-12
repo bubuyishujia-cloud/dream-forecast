@@ -10,6 +10,7 @@ import { saveDreamRecord, parseShareUrl } from './utils/storage';
 function App() {
   const [loading, setLoading] = useState(false);
   const [currentResult, setCurrentResult] = useState(null);
+  const [historyRefresh, setHistoryRefresh] = useState(0); // 用于触发历史记录刷新
 
   useEffect(() => {
     // 检查是否有分享链接
@@ -39,6 +40,8 @@ function App() {
         result,
         timestamp: record.timestamp
       });
+      // 触发历史记录刷新
+      setHistoryRefresh(prev => prev + 1);
     } catch (error) {
       alert(`解析失败: ${error.message}`);
     } finally {
@@ -95,11 +98,11 @@ function App() {
             </>
           )}
 
-          <HistoryPanel onSelectRecord={handleSelectHistory} />
+          <HistoryPanel onSelectRecord={handleSelectHistory} refreshTrigger={historyRefresh} />
         </div>
 
         <footer className="mt-12 text-center text-gray-500 text-sm font-serif">
-          <p>Powered by Claude API • 数据存储在本地浏览器</p>
+          <p>智能梦境解析 • 数据存储在本地浏览器</p>
         </footer>
       </div>
     </div>
