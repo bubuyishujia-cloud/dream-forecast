@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import StarryBackground from './components/StarryBackground';
 import DreamInput from './components/DreamInput';
 import LoadingAnimation from './components/LoadingAnimation';
 import DreamResult from './components/DreamResult';
@@ -10,10 +9,9 @@ import { saveDreamRecord, parseShareUrl } from './utils/storage';
 function App() {
   const [loading, setLoading] = useState(false);
   const [currentResult, setCurrentResult] = useState(null);
-  const [historyRefresh, setHistoryRefresh] = useState(0); // 用于触发历史记录刷新
+  const [historyRefresh, setHistoryRefresh] = useState(0);
 
   useEffect(() => {
-    // 检查是否有分享链接
     const sharedData = parseShareUrl();
     if (sharedData) {
       setCurrentResult({
@@ -22,7 +20,6 @@ function App() {
         result: sharedData.result,
         timestamp: sharedData.timestamp
       });
-      // 清除 URL 参数
       window.history.replaceState({}, '', window.location.pathname);
     }
   }, []);
@@ -40,7 +37,6 @@ function App() {
         result,
         timestamp: record.timestamp
       });
-      // 触发历史记录刷新
       setHistoryRefresh(prev => prev + 1);
     } catch (error) {
       alert(`解析失败: ${error.message}`);
@@ -63,18 +59,18 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen relative">
-      <StarryBackground />
-
-      <div className="relative z-10 container mx-auto px-4 py-8 max-w-4xl">
-        <header className="text-center mb-12">
-          <h1 className="text-5xl font-bold font-serif mb-4 bg-gradient-to-r from-amber-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-float">
-            🌙 梦境预报
+    <div className="min-h-screen bg-white">
+      <div className="container mx-auto px-6 py-16 max-w-4xl">
+        <header className="text-center mb-24">
+          <h1 className="text-5xl font-light tracking-wide mb-6 text-gray-900">
+            梦境预报
           </h1>
-          <p className="text-gray-400 text-lg font-serif">探索潜意识的星辰大海</p>
+          <p className="text-base font-light text-gray-500 tracking-wider">
+            DREAM FORECAST
+          </p>
         </header>
 
-        <div className="space-y-6">
+        <div className="space-y-20">
           {!loading && !currentResult && (
             <DreamInput onSubmit={handleAnalyze} loading={loading} />
           )}
@@ -89,20 +85,22 @@ function App() {
                 result={currentResult.result}
                 timestamp={currentResult.timestamp}
               />
-              <button
-                onClick={handleNewAnalysis}
-                className="w-full py-3 bg-gradient-to-r from-amber-600 to-purple-600 hover:from-amber-700 hover:to-purple-700 rounded-lg font-semibold font-serif text-white transition-all duration-300 shadow-lg"
-              >
-                ✨ 解析新梦境
-              </button>
+              <div className="text-center">
+                <button
+                  onClick={handleNewAnalysis}
+                  className="px-12 py-4 border border-gray-300 text-gray-900 font-light tracking-wider hover:border-gray-900 transition-colors duration-300"
+                >
+                  新的解析
+                </button>
+              </div>
             </>
           )}
 
           <HistoryPanel onSelectRecord={handleSelectHistory} refreshTrigger={historyRefresh} />
         </div>
 
-        <footer className="mt-12 text-center text-gray-500 text-sm font-serif">
-          <p>智能梦境解析 • 数据存储在本地浏览器</p>
+        <footer className="mt-32 text-center text-xs font-light text-gray-400 tracking-widest">
+          <p>POWERED BY INTELLIGENT ALGORITHM</p>
         </footer>
       </div>
     </div>

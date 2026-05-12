@@ -1,11 +1,11 @@
 import { getDreamHistory, deleteDreamRecord, exportHistory, importHistory } from '../utils/storage';
 import { useState, useEffect } from 'react';
 
-const ratingEmoji = {
-  '吉': '✨',
-  '凶': '⚠️',
-  '平': '🌙',
-  '奇': '🌟'
+const ratingLabel = {
+  '吉': 'AUSPICIOUS',
+  '凶': 'OMINOUS',
+  '平': 'NEUTRAL',
+  '奇': 'MYSTERIOUS'
 };
 
 export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
@@ -14,14 +14,14 @@ export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
 
   useEffect(() => {
     loadHistory();
-  }, [refreshTrigger]); // 当 refreshTrigger 变化时重新加载
+  }, [refreshTrigger]);
 
   const loadHistory = () => {
     setHistory(getDreamHistory());
   };
 
   const handleDelete = (id) => {
-    if (confirm('确定要删除这条记录吗？')) {
+    if (confirm('确定删除此记录？')) {
       deleteDreamRecord(id);
       loadHistory();
     }
@@ -36,7 +36,7 @@ export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
     if (file) {
       importHistory(file)
         .then((count) => {
-          alert(`成功导入 ${count} 条记录`);
+          alert(`已导入 ${count} 条记录`);
           loadHistory();
         })
         .catch((error) => {
@@ -46,28 +46,28 @@ export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
   };
 
   return (
-    <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-amber-500/20 shadow-xl">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold font-serif text-amber-200">📚 历史记录</h2>
+    <div className="border-t border-gray-200 pt-16">
+      <div className="flex items-center justify-between mb-12">
+        <h2 className="text-xs font-light text-gray-400 tracking-widest">HISTORY</h2>
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-gray-400 hover:text-amber-300 transition-colors font-serif"
+          className="text-xs font-light text-gray-400 tracking-wider hover:text-gray-900 transition-colors"
         >
-          {expanded ? '收起 ▲' : '展开 ▼'}
+          {expanded ? 'COLLAPSE' : 'EXPAND'}
         </button>
       </div>
 
       {expanded && (
         <>
-          <div className="flex gap-2 mb-4">
+          <div className="flex gap-4 mb-12">
             <button
               onClick={handleExport}
-              className="flex-1 py-2 bg-amber-600/50 hover:bg-amber-600/70 rounded-lg text-sm font-semibold font-serif text-white transition-all"
+              className="flex-1 py-3 border border-gray-200 text-xs font-light text-gray-600 tracking-wider hover:border-gray-900 hover:text-gray-900 transition-colors"
             >
-              📤 导出
+              导出数据
             </button>
-            <label className="flex-1 py-2 bg-purple-600/50 hover:bg-purple-600/70 rounded-lg text-sm font-semibold font-serif text-white transition-all cursor-pointer text-center">
-              📥 导入
+            <label className="flex-1 py-3 border border-gray-200 text-xs font-light text-gray-600 tracking-wider hover:border-gray-900 hover:text-gray-900 transition-colors cursor-pointer text-center">
+              导入数据
               <input
                 type="file"
                 accept=".json"
@@ -77,36 +77,44 @@ export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
             </label>
           </div>
 
-          <div className="space-y-3 max-h-96 overflow-y-auto">
+          <div className="space-y-6">
             {history.length === 0 ? (
-              <p className="text-center text-gray-400 py-8 font-serif">暂无历史记录</p>
+              <p className="text-center text-gray-300 py-16 text-sm font-light tracking-wide">暂无记录</p>
             ) : (
               history.map((record) => (
                 <div
                   key={record.id}
-                  className="bg-black/30 rounded-lg p-4 border border-amber-500/20 hover:border-amber-500/50 transition-all cursor-pointer"
+                  className="border border-gray-200 p-6 hover:border-gray-900 transition-colors cursor-pointer group"
                   onClick={() => onSelectRecord(record)}
                 >
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">{ratingEmoji[record.result.rating]}</span>
-                      <span className="font-semibold font-serif text-amber-300">{record.result.rating}</span>
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <span className="text-xs font-light text-gray-400 tracking-widest">
+                        {ratingLabel[record.result.rating]}
+                      </span>
+                      <h3 className="text-lg font-light text-gray-900 mt-1">
+                        {record.result.rating}
+                      </h3>
                     </div>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleDelete(record.id);
                       }}
-                      className="text-red-400 hover:text-red-300 text-sm"
+                      className="text-xs font-light text-gray-300 hover:text-gray-900 transition-colors"
                     >
-                      🗑️
+                      删除
                     </button>
                   </div>
-                  <p className="text-sm text-gray-300 line-clamp-2 mb-2 font-serif">
+                  <p className="text-sm font-light text-gray-600 leading-relaxed line-clamp-2 mb-4">
                     {record.dreamText}
                   </p>
-                  <p className="text-xs text-gray-500 font-serif">
-                    {new Date(record.timestamp).toLocaleString('zh-CN')}
+                  <p className="text-xs font-light text-gray-300 tracking-wider">
+                    {new Date(record.timestamp).toLocaleDateString('zh-CN', {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit'
+                    }).replace(/\//g, '.')}
                   </p>
                 </div>
               ))

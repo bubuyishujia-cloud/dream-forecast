@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,13 +11,15 @@
 }
 
 body {
-  font-family: 'Noto Serif SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', serif;
+  font-family: 'Noto Serif SC', Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to bottom, #0a0e27 0%, #1a1f3a 50%, #2d1b69 100%);
+  background: #ffffff;
   min-height: 100vh;
-  color: #e0e7ff;
+  color: #1a1a1a;
   overflow-x: hidden;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
 }
 
 #root {
@@ -25,24 +27,14 @@ body {
   position: relative;
 }
 
-@keyframes twinkle {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 1; }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.6); }
-}
-
+/* 移除所有动画，保持静态优雅 */
 @layer utilities {
   .font-serif {
-    font-family: 'Noto Serif SC', serif;
+    font-family: 'Noto Serif SC', Georgia, serif;
+  }
+
+  .text-balance {
+    text-wrap: balance;
   }
 }
 
