@@ -1,12 +1,12 @@
 # 🌙 梦境预报 Dream Forecast
 
-一个基于 AI 的梦境解析单页应用，帮助你探索潜意识的星辰大海。
+一个基于智能算法的梦境解析单页应用，帮助你探索潜意识的星辰大海。
 
 > 📱 **想要部署到云端，让手机也能访问？** 查看 [部署指南 DEPLOY.md](./DEPLOY.md)
 
 ## ✨ 功能特性
 
-- 🔮 **AI 梦境解析**：使用 Claude API 生成结构化的梦境分析
+- 🔮 **智能梦境解析**：基于关键词和情绪标签生成结构化的梦境分析
 - 🏷️ **情绪标签**：选择梦境相关的情绪标签，提升解析准确度
 - 🎨 **核心意象提取**：识别梦境中的关键符号和象征
 - 📊 **梦境评级**：吉/凶/平/奇四种评级系统
@@ -16,6 +16,7 @@
 - 💾 **本地存储**：历史记录保存在浏览器本地
 - 📤 **数据导入导出**：支持 JSON 格式的数据迁移
 - 🌌 **星空主题**：深色星空背景，200+ 繁星点点，金色+紫色调，Noto Serif SC 字体
+- 🆓 **完全免费**：无需 API Key，纯前端运行
 
 ## 🚀 快速开始
 
@@ -25,45 +26,23 @@
 npm install
 ```
 
-### 2. 配置 API Key
-
-复制 `.env.example` 为 `.env`，并填入你的 Anthropic API Key：
+### 2. 启动开发服务器
 
 ```bash
-cp .env.example .env
-```
-
-编辑 `.env` 文件：
-
-```env
-ANTHROPIC_API_KEY=your_api_key_here
-PORT=3001
-```
-
-从 [Anthropic Console](https://console.anthropic.com/) 获取 API Key。
-
-### 3. 启动服务
-
-**方式一：分别启动（推荐用于开发）**
-
-```bash
-# 终端 1：启动后端服务器
-npm run server
-
-# 终端 2：启动前端开发服务器
 npm run dev
 ```
 
-**方式二：同时启动**
+访问 http://localhost:5173 即可使用。
+
+### 3. 构建生产版本
 
 ```bash
-npm start
+npm run build
 ```
 
-访问前端：http://localhost:5173（或其他可用端口）
-后端 API：http://localhost:3001
+构建产物将输出到 `dist` 目录。
 
-### 4. 构建生产版本
+## 📖 使用说明
 
 ```bash
 npm run build
@@ -99,6 +78,18 @@ npm run build
 
 ## 🎨 设计特色
 
+## 🛠️ 技术栈
+
+- **框架**：React 18
+- **构建工具**：Vite
+- **样式**：Tailwind CSS 3
+- **字体**：Noto Serif SC (Google Fonts)
+- **截图**：html2canvas
+- **存储**：localStorage
+- **解析引擎**：智能关键词识别 + 情绪分析
+
+## 🎨 设计特色
+
 - **深色星空背景**：渐变色从深蓝到紫色
 - **繁星点点**：200+ 闪烁星星，15% 为金色星星
 - **毛玻璃卡片**：backdrop-blur 效果
@@ -110,9 +101,9 @@ npm run build
 
 ```
 dream-forecast/
-├── src/                          # 前端源码
+├── src/
 │   ├── api/
-│   │   └── anthropic.js          # API 调用（通过后端代理）
+│   │   └── anthropic.js          # 智能解析引擎
 │   ├── components/
 │   │   ├── DreamInput.jsx        # 梦境输入组件（含情绪标签）
 │   │   ├── DreamResult.jsx       # 结果展示组件
@@ -124,9 +115,6 @@ dream-forecast/
 │   ├── App.jsx                   # 主应用组件
 │   ├── main.jsx                  # 应用入口
 │   └── index.css                 # 全局样式（含 Noto Serif SC）
-├── server.js                     # Express 后端服务器
-├── .env                          # 环境变量（需自行创建）
-├── .env.example                  # 环境变量模板
 ├── index.html
 ├── package.json
 ├── tailwind.config.js
@@ -135,17 +123,17 @@ dream-forecast/
 
 ## 🏗️ 架构说明
 
-本项目采用前后端分离架构：
+本项目是纯前端应用，无需后端服务器：
 
-- **前端**（React + Vite）：运行在 `http://localhost:5173`（或其他可用端口）
-- **后端**（Express）：运行在 `http://localhost:3001`
-
-前端通过后端代理调用 Anthropic API，避免了浏览器 CORS 限制和 API Key 暴露问题。
+- **纯前端运行**：所有逻辑在浏览器中执行
+- **智能解析**：基于关键词识别和情绪标签生成解析结果
+- **完全免费**：无需 API Key，无使用限制
+- **隐私保护**：所有数据仅存储在本地浏览器
 
 ## 🔒 隐私说明
 
-- API Key 存储在服务器端 `.env` 文件中，不会暴露给前端
-- 梦境内容通过后端代理发送到 Anthropic API 进行分析
+- 无需注册或登录
+- 梦境内容仅在本地浏览器处理，不会上传到任何服务器
 - 历史记录保存在浏览器 localStorage 中
 - 所有数据完全由用户控制，可随时导出或删除
 
