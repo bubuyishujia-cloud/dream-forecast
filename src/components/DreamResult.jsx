@@ -82,23 +82,23 @@ export default function DreamResult({ dreamText, emotions, result, timestamp }) 
         {/* 评级 */}
         <div className="text-center mb-16 pb-16 border-b border-gray-200">
           <div className="inline-block">
-            <p className="text-xs font-light text-gray-400 tracking-widest mb-4">RATING</p>
-            <h2 className={`text-4xl font-light tracking-wider ${config.color}`}>
+            <p className="text-xs font-normal text-gray-500 tracking-widest mb-4">RATING</p>
+            <h2 className={`text-4xl font-normal tracking-wider ${config.color}`}>
               {result.rating}
             </h2>
-            <p className="text-xs font-light text-gray-400 tracking-widest mt-2">
+            <p className="text-xs font-normal text-gray-500 tracking-widest mt-2">
               {config.label}
             </p>
           </div>
-          <p className="mt-8 text-sm font-light text-gray-600 leading-relaxed max-w-md mx-auto">
+          <p className="mt-8 text-sm font-normal text-gray-700 leading-relaxed max-w-md mx-auto">
             {result.ratingReason}
           </p>
         </div>
 
         {/* 梦境内容 */}
         <div className="mb-16 pb-16 border-b border-gray-200">
-          <h3 className="text-xs font-light text-gray-400 tracking-widest mb-8">DREAM</h3>
-          <p className="text-base font-light text-gray-700 leading-loose">
+          <h3 className="text-xs font-light text-gray-500 tracking-widest mb-8">DREAM</h3>
+          <p className="text-base font-normal text-gray-900 leading-loose">
             {dreamText}
           </p>
           {emotions && emotions.length > 0 && (
@@ -106,7 +106,7 @@ export default function DreamResult({ dreamText, emotions, result, timestamp }) 
               {emotions.map((emotion, index) => (
                 <span
                   key={index}
-                  className="px-4 py-1 border border-gray-200 text-xs font-light text-gray-500 tracking-wide"
+                  className="px-4 py-1 border border-gray-300 text-xs font-normal text-gray-700 tracking-wide"
                 >
                   {emotion}
                 </span>
@@ -117,12 +117,12 @@ export default function DreamResult({ dreamText, emotions, result, timestamp }) 
 
         {/* 核心意象 */}
         <div className="mb-16 pb-16 border-b border-gray-200">
-          <h3 className="text-xs font-light text-gray-400 tracking-widest mb-8">SYMBOLS</h3>
+          <h3 className="text-xs font-light text-gray-500 tracking-widest mb-8">SYMBOLS</h3>
           <div className="flex flex-wrap gap-4">
             {result.coreSymbols.map((symbol, index) => (
               <span
                 key={index}
-                className="px-6 py-2 border border-gray-900 text-sm font-light text-gray-900 tracking-wide"
+                className="px-6 py-2 border border-gray-900 text-sm font-normal text-gray-900 tracking-wide"
               >
                 {symbol}
               </span>
@@ -132,24 +132,24 @@ export default function DreamResult({ dreamText, emotions, result, timestamp }) 
 
         {/* 近期预示 */}
         <div className="mb-16 pb-16 border-b border-gray-200">
-          <h3 className="text-xs font-light text-gray-400 tracking-widest mb-8">PREDICTION</h3>
-          <p className="text-base font-light text-gray-700 leading-loose">
+          <h3 className="text-xs font-light text-gray-500 tracking-widest mb-8">PREDICTION</h3>
+          <p className="text-base font-normal text-gray-900 leading-loose">
             {result.recentPrediction}
           </p>
         </div>
 
         {/* 潜在警示 */}
         <div className="mb-16 pb-16 border-b border-gray-200">
-          <h3 className="text-xs font-light text-gray-400 tracking-widest mb-8">WARNING</h3>
-          <p className="text-base font-light text-gray-700 leading-loose">
+          <h3 className="text-xs font-light text-gray-500 tracking-widest mb-8">WARNING</h3>
+          <p className="text-base font-normal text-gray-900 leading-loose">
             {result.potentialWarning}
           </p>
         </div>
 
         {/* 今日指引 */}
         <div className="mb-16">
-          <h3 className="text-xs font-light text-gray-400 tracking-widest mb-8">GUIDANCE</h3>
-          <p className="text-base font-light text-gray-700 leading-loose">
+          <h3 className="text-xs font-light text-gray-500 tracking-widest mb-8">GUIDANCE</h3>
+          <p className="text-base font-normal text-gray-900 leading-loose">
             {result.todayGuidance}
           </p>
         </div>
@@ -170,13 +170,13 @@ export default function DreamResult({ dreamText, emotions, result, timestamp }) 
       <div className="flex gap-4 justify-center">
         <button
           onClick={handleScreenshot}
-          className="px-8 py-3 border border-gray-300 text-gray-600 text-sm font-light tracking-wider hover:border-gray-900 hover:text-gray-900 transition-colors duration-300"
+          className="px-8 py-3 border border-gray-400 text-gray-700 text-sm font-normal tracking-wider hover:border-gray-900 hover:text-gray-900 transition-colors duration-300"
         >
           保存图片
         </button>
         <button
           onClick={handleShare}
-          className="px-8 py-3 border border-gray-300 text-gray-600 text-sm font-light tracking-wider hover:border-gray-900 hover:text-gray-900 transition-colors duration-300"
+          className="px-8 py-3 border border-gray-400 text-gray-700 text-sm font-normal tracking-wider hover:border-gray-900 hover:text-gray-900 transition-colors duration-300"
         >
           分享链接
         </button>

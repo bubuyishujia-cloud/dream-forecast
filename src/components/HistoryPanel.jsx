@@ -48,10 +48,10 @@ export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
   return (
     <div className="border-t border-gray-200 pt-16">
       <div className="flex items-center justify-between mb-12">
-        <h2 className="text-xs font-light text-gray-400 tracking-widest">HISTORY</h2>
+        <h2 className="text-xs font-normal text-gray-600 tracking-widest">HISTORY</h2>
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-xs font-light text-gray-400 tracking-wider hover:text-gray-900 transition-colors"
+          className="text-xs font-normal text-gray-600 tracking-wider hover:text-gray-900 transition-colors"
         >
           {expanded ? 'COLLAPSE' : 'EXPAND'}
         </button>
@@ -62,11 +62,11 @@ export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
           <div className="flex gap-4 mb-12">
             <button
               onClick={handleExport}
-              className="flex-1 py-3 border border-gray-200 text-xs font-light text-gray-600 tracking-wider hover:border-gray-900 hover:text-gray-900 transition-colors"
+              className="flex-1 py-3 border border-gray-300 text-xs font-normal text-gray-700 tracking-wider hover:border-gray-900 hover:text-gray-900 transition-colors"
             >
               导出数据
             </button>
-            <label className="flex-1 py-3 border border-gray-200 text-xs font-light text-gray-600 tracking-wider hover:border-gray-900 hover:text-gray-900 transition-colors cursor-pointer text-center">
+            <label className="flex-1 py-3 border border-gray-300 text-xs font-normal text-gray-700 tracking-wider hover:border-gray-900 hover:text-gray-900 transition-colors cursor-pointer text-center">
               导入数据
               <input
                 type="file"
@@ -79,20 +79,20 @@ export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
 
           <div className="space-y-6">
             {history.length === 0 ? (
-              <p className="text-center text-gray-300 py-16 text-sm font-light tracking-wide">暂无记录</p>
+              <p className="text-center text-gray-400 py-16 text-sm font-normal tracking-wide">暂无记录</p>
             ) : (
               history.map((record) => (
                 <div
                   key={record.id}
-                  className="border border-gray-200 p-6 hover:border-gray-900 transition-colors cursor-pointer group"
+                  className="border border-gray-300 p-6 hover:border-gray-900 transition-colors cursor-pointer group"
                   onClick={() => onSelectRecord(record)}
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div>
-                      <span className="text-xs font-light text-gray-400 tracking-widest">
+                      <span className="text-xs font-normal text-gray-500 tracking-widest">
                         {ratingLabel[record.result.rating]}
                       </span>
-                      <h3 className="text-lg font-light text-gray-900 mt-1">
+                      <h3 className="text-lg font-normal text-gray-900 mt-1">
                         {record.result.rating}
                       </h3>
                     </div>
@@ -101,15 +101,15 @@ export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
                         e.stopPropagation();
                         handleDelete(record.id);
                       }}
-                      className="text-xs font-light text-gray-300 hover:text-gray-900 transition-colors"
+                      className="text-xs font-normal text-gray-400 hover:text-gray-900 transition-colors"
                     >
                       删除
                     </button>
                   </div>
-                  <p className="text-sm font-light text-gray-600 leading-relaxed line-clamp-2 mb-4">
+                  <p className="text-sm font-normal text-gray-700 leading-relaxed line-clamp-2 mb-4">
                     {record.dreamText}
                   </p>
-                  <p className="text-xs font-light text-gray-300 tracking-wider">
+                  <p className="text-xs font-normal text-gray-400 tracking-wider">
                     {new Date(record.timestamp).toLocaleDateString('zh-CN', {
                       year: 'numeric',
                       month: '2-digit',
