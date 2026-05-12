@@ -2,10 +2,10 @@ import { getDreamHistory, deleteDreamRecord, exportHistory, importHistory } from
 import { useState, useEffect } from 'react';
 
 const ratingLabel = {
-  '吉': 'AUSPICIOUS',
-  '凶': 'OMINOUS',
-  '平': 'NEUTRAL',
-  '奇': 'MYSTERIOUS'
+  '吉': '吉',
+  '凶': '凶',
+  '平': '平',
+  '奇': '奇'
 };
 
 export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
@@ -48,12 +48,12 @@ export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
   return (
     <div className="border-t border-gray-200 pt-16">
       <div className="flex items-center justify-between mb-12">
-        <h2 className="text-xs font-normal text-gray-600 tracking-widest">HISTORY</h2>
+        <h2 className="text-xs font-normal text-gray-600 tracking-widest">历史记录</h2>
         <button
           onClick={() => setExpanded(!expanded)}
           className="text-xs font-normal text-gray-600 tracking-wider hover:text-gray-900 transition-colors"
         >
-          {expanded ? 'COLLAPSE' : 'EXPAND'}
+          {expanded ? '收起' : '展开'}
         </button>
       </div>
 
@@ -90,7 +90,7 @@ export default function HistoryPanel({ onSelectRecord, refreshTrigger }) {
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <span className="text-xs font-normal text-gray-500 tracking-widest">
-                        {ratingLabel[record.result.rating]}
+                        评级
                       </span>
                       <h3 className="text-lg font-normal text-gray-900 mt-1">
                         {record.result.rating}
